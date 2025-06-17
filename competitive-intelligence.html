@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔒 CLASSIFIED - Competitive Intelligence Bunker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #00ff41;
+            overflow-x: hidden;
+        }
+        
+        .classified-header {
+            background: linear-gradient(45deg, #1a1a1a, #2d2d2d);
+            border-bottom: 2px solid #ff0000;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .classified-stamp {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            background: #ff0000;
+            color: white;
+            padding: 5px 15px;
+            transform: rotate(15deg);
+            font-weight: bold;
+            border: 2px solid #ff0000;
+        }
+        
+        .warning-banner {
+            background: #ff4444;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        
+        .bunker-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .intel-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .intel-panel {
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            border: 1px solid #00ff41;
+            border-radius: 10px;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+        }
+        
+        .panel-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #00ff41;
+            padding-bottom: 10px;
+        }
+        
+        .panel-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #00ff41;
+            margin-left: 10px;
+        }
+        
+        .threat-level {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .threat-high { background: #ff0000; color: white; }
+        .threat-medium { background: #ff8800; color: white; }
+        .threat-low { background: #00ff00; color: black; }
+        
+        .competitor-card {
+            background: #2a2a2a;
+            border: 1px solid #555;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .competitor-name {
+            font-size: 16px;
+            font-weight: bold;
+            color: #ff6b6b;
+            margin-bottom: 10px;
+        }
+        
+        .intel-stat {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .stat-value {
+            color: #00ff41;
+            font-weight: bold;
+        }
+        
+        .heat-score {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff0000;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 50%;
+            font-weight: bold;
+            animation: glow 2s infinite;
+        }
+        
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px #ff0000; }
+            50% { box-shadow: 0 0 20px #ff0000; }
+            100% { box-shadow: 0 0 5px #ff0000; }
+        }
+        
+        .live-feed {
+            background: #1a1a1a;
+            border: 1px solid #00ff41;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .feed-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            margin-bottom: 10px;
+        }
+        
+        .feed-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .feed-menu { background: #ff8800; color: white; }
+        .feed-review { background: #ff0000; color: white; }
+        .feed-social { background: #4267B2; color: white; }
+        .feed-promo { background: #00ff00; color: black; }
+        
+        .feed-content {
+            flex: 1;
+        }
+        
+        .feed-title {
+            font-weight: bold;
+            color: #00ff41;
+            margin-bottom: 5px;
+        }
+        
+        .feed-details {
+            font-size: 12px;
+            color: #ccc;
+        }
+        
+        .word-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .word-tag {
+            background: #333;
+            color: #00ff41;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            border: 1px solid #00ff41;
+        }
+        
+        .word-tag.negative {
+            background: #ff0000;
+            color: white;
+            border-color: #ff0000;
+        }
+        
+        .counter-strategy {
+            background: linear-gradient(135deg, #ff0000, #ff4444);
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 2px solid #ff0000;
+        }
+        
+        .strategy-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .strategy-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid #00ff41;
+        }
+        
+        .exploit-alert {
+            background: #ff0000;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 2px solid #ff4444;
+            animation: pulse 2s infinite;
+        }
+        
+        .radar-chart {
+            width: 100%;
+            height: 300px;
+            background: radial-gradient(circle, #2a2a2a 0%, #1a1a1a 100%);
+            border-radius: 50%;
+            position: relative;
+            margin: 20px 0;
+        }
+        
+        .timeline-graph {
+            height: 200px;
+            background: linear-gradient(to right, #1a1a1a, #2a2a2a);
+            border: 1px solid #00ff41;
+            border-radius: 8px;
+            position: relative;
+            margin: 20px 0;
+        }
+        
+        .source-tag {
+            background: #333;
+            color: #ccc;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 10px;
+            margin-left: 10px;
+        }
+        
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .action-button {
+            background: #00ff41;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s;
+        }
+        
+        .action-button:hover {
+            background: #00cc33;
+            transform: scale(1.05);
+        }
+        
+        .danger-button {
+            background: #ff0000;
+            color: white;
+        }
+        
+        .danger-button:hover {
+            background: #cc0000;
+        }
+        
+        @media (max-width: 768px) {
+            .intel-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="classified-header">
+        <div class="classified-stamp">TOP SECRET</div>
+        <h1>🔒 COMPETITIVE INTELLIGENCE BUNKER</h1>
+        <p>CLASSIFIED OPERATION: LOCAL MARKET DOMINATION</p>
+    </div>
+    
+    <div class="warning-banner">
+        ⚠️ HANDLE WITH CARE - THESE INSIGHTS GIVE YOU AN UNFAIR ADVANTAGE ⚠️
+    </div>
+    
+    <div class="bunker-container">
+        <!-- Live Intelligence Feed -->
+        <div class="live-feed">
+            <h2>🚨 LIVE INTELLIGENCE FEED - LAST 48 HOURS</h2>
+            <div class="feed-item">
+                <div class="feed-icon feed-review">!</div>
+                <div class="feed-content">
+                    <div class="feed-title">JOLLY SAILOR: Negative Review Spike Detected</div>
+                    <div class="feed-details">3 x 1-star reviews mentioning "slow service" in last 24hrs <span class="source-tag">TripAdvisor</span></div>
+                </div>
+            </div>
+            <div class="feed-item">
+                <div class="feed-icon feed-menu">🍽️</div>
+                <div class="feed-content">
+                    <div class="feed-title">HARBOURMASTER: Menu Update Detected</div>
+                    <div class="feed-details">Added "Winter Warmer Menu" - 4 new dishes, £2 price increase <span class="source-tag">Facebook</span></div>
+                </div>
+            </div>
+            <div class="feed-item">
+                <div class="feed-icon feed-social">📱</div>
+                <div class="feed-content">
+                    <div class="feed-title">MANILLAS: Viral Post Alert</div>
+                    <div class="feed-details">"Sunday Roast Special" post got 127 likes, 23 shares <span class="source-tag">Instagram</span></div>
+                </div>
+            </div>
+            <div class="feed-item">
+                <div class="feed-icon feed-promo">💰</div>
+                <div class="feed-content">
+                    <div class="feed-title">YACHT CLUB: New Loyalty Program</div>
+                    <div class="feed-details">Launched "Marina Members" - 10% discount for locals <span class="source-tag">Website</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="intel-grid">
+            <!-- Competitive Leaderboard -->
+            <div class="intel-panel">
+                <div class="panel-header">
+                    <span>🏆</span>
+                    <div class="panel-title">THREAT ASSESSMENT LEADERBOARD</div>
+                </div>
+                
+                <div class="competitor-card">
+                    <div class="heat-score">94</div>
+                    <div class="competitor-name">🔥 JOLLY SAILOR</div>
+                    <div class="threat-level threat-high">EXTREME THREAT</div>
+                    <div class="intel-stat">
+                        <span>Rating:</span>
+                        <span class="stat-value">4.07/5 (683 reviews)</span>
+                    </div>
+                    <div class="intel-stat">
+                        <span>Response Rate:</span>
+                        <span class="stat-value">2.6% (WEAKNESS!)</span>
+                    </div>
+                    <div class="intel-stat">
+                        <span>Recent Trend:</span>
+                        <span class="stat-value">📈 +0.2 stars (improving)</span>
+                    </div>
+                    <div class="intel-stat">
+                        <span>Vulnerability:</span>
+                        <span class="stat-value">116 unanswered questions</span>
+                    </div>
+                </div>
+
+                <div class="competitor-card">
+                    <div class="heat-score">78</div>
+                    <div class="competitor-name">⚠️ HARBOURMASTER</div>
+                    <div class="threat-level threat-medium">HIGH THREAT</div>
+                    <div class="intel-stat">
+                        <span>Rating:</span>
+                        <span class="stat-value">4.5/5 (892 reviews)</span>
+                    </div>
+                    <div class="intel-stat">
+                        <span>Response Rate:</span>
+                        <span class="stat-value">5.1% (ACTIVE!)</span>
+                    </div>
+                    <div class="intel-stat">
+                        <span>Recent Trend:</span>
+                        <span class="stat-value">📉 -0.1 stars (declining)</span>
+                    </div>
+                    <div class="intel-stat">
+                        <span>Strength:</span>
+                        <span class="stat-value">Strong social media presence</span>
+                    </div>
+                </div>
+
+                <div class="competitor-card">
+                    <div class="heat-score">65</div>
+                    <div class="competitor-name">📊 MANILLAS.FOOD</div>
+                    <div class="threat-level threat-medium">MEDIUM THREAT</div>
+                    <div class="intel-stat">
+                        <span>Rating:</span>
+                        <span class="stat-value">4.5/5 (369 reviews)</span>
+                    </div>
+                    <div class="intel-stat">
+                        <span>Response Rate:</span>
+                        <span class="stat-value">0% (OPPORTUNITY!)</span>
+                    </div>
+                    <div class="intel-stat">
+                        <span>Recent Trend:</span>
+                        <span class="stat-value">📈 Stable performance</span>
+                    </div>
+                    <div class="intel-stat">
+                        <span>Weakness:</span>
+                        <span class="stat-value">Limited online presence</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Sentiment Analysis -->
+            <div class="intel-panel">
+                <div class="panel-header">
+                    <span>💭</span>
+                    <div class="panel-title">WHAT THEIR CUSTOMERS ARE SAYING</div>
+                </div>
+                
+                <h4 style="color: #00ff41; margin-bottom: 10px;">🔥 MOST PRAISED (Competitors)</h4>
+                <div class="word-cloud">
+                    <div class="word-tag">excellent food</div>
+                    <div class="word-tag">friendly staff</div>
+                    <div class="word-tag">great atmosphere</div>
+                    <div class="word-tag">good value</div>
+                    <div class="word-tag">lovely views</div>
+                </div>
+
+                <h4 style="color: #ff0000; margin-bottom: 10px; margin-top: 20px;">💀 MOST HATED (Exploit These!)</h4>
+                <div class="word-cloud">
+                    <div class="word-tag negative">slow service</div>
+                    <div class="word-tag negative">expensive</div>
+                    <div class="word-tag negative">cold food</div>
+                    <div class="word-tag negative">rude staff</div>
+                    <div class="word-tag negative">long wait</div>
+                    <div class="word-tag negative">poor quality</div>
+                </div>
+
+                <div style="margin-top: 20px; padding: 15px; background: #2a2a2a; border-radius: 8px;">
+                    <h4 style="color: #ff6b6b;">🎯 EMERGING ISSUES THIS WEEK:</h4>
+                    <ul style="margin-top: 10px; color: #ccc;">
+                        <li>• Jolly Sailor: 3 complaints about "understaffed weekends"</li>
+                        <li>• Harbourmaster: 2 mentions of "overpriced drinks"</li>
+                        <li>• Manillas: 1 complaint about "limited parking"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Secret Intelligence -->
+            <div class="intel-panel">
+                <div class="panel-header">
+                    <span>🕵️</span>
+                    <div class="panel-title">SECRET PLAYS & UNTAPPED ANGLES</div>
+                </div>
+                
+                <div class="exploit-alert">
+                    <strong>🚨 IMMEDIATE EXPLOIT OPPORTUNITY:</strong><br>
+                    Jolly Sailor customers frustrated about "no table service outside" - promote your outdoor table service!
+                </div>
+
+                <div style="background: #2a2a2a; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                    <h4 style="color: #00ff41;">🌟 THEIR STAR PERFORMERS:</h4>
+                    <ul style="margin-top: 10px; color: #ccc;">
+                        <li>• Jolly Sailor: "Sarah" mentioned in 12 positive reviews</li>
+                        <li>• Harbourmaster: "Tom the chef" praised 8 times</li>
+                        <li>• Your "Liam" beats them all with 15 mentions! 🏆</li>
+                    </ul>
+                </div>
+
+                <div style="background: #2a2a2a; padding: 15px; border-radius: 8px;">
+                    <h4 style="color: #ff8800;">🍽️ THEIR VIRAL MENU ITEMS:</h4>
+                    <ul style="margin-top: 10px; color: #ccc;">
+                        <li>• Jolly Sailor: "Fish & Chips" (mentioned 47 times)</li>
+                        <li>• Harbourmaster: "Sunday Roast" (mentioned 23 times)</li>
+                        <li>• Manillas: "Paella" (mentioned 18 times)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- AI Counter-Strategy -->
+            <div class="intel-panel">
+                <div class="panel-header">
+                    <span>🤖</span>
+                    <div class="panel-title">AI COUNTER-PLAYBOOK</div>
+                </div>
+                
+                <div class="strategy-item">
+                    <strong>🎯 IMMEDIATE ACTION:</strong><br>
+                    Launch "Fast Service Guarantee" campaign - exploit Jolly Sailor's slow service complaints
+                </div>
+
+                <div class="strategy-item">
+                    <strong>💰 PRICING STRATEGY:</strong><br>
+                    Harbourmaster raised prices £2 - keep yours stable and promote "same great value"
+                </div>
+
+                <div class="strategy-item">
+                    <strong>📱 SOCIAL MEDIA:</strong><br>
+                    Manillas got 127 likes on Sunday roast - post your Sunday lunch special with better photos
+                </div>
+
+                <div class="strategy-item">
+                    <strong>⭐ STAFF PROMOTION:</strong><br>
+                    Liam is your secret weapon - create "Ask for Liam" campaign to leverage his popularity
+                </div>
+            </div>
+        </div>
+
+        <!-- Full-width sections -->
+        <div class="intel-panel full-width">
+            <div class="panel-header">
+                <span>📊</span>
+                <div class="panel-title">SIDE-BY-SIDE BATTLE ANALYSIS</div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div style="background: #2a2a2a; padding: 15px; border-radius: 8px;">
+                    <h4 style="color: #ff6b6b;">JOLLY SAILOR (Last 7 Days)</h4>
+                    <ul style="margin-top: 10px; color: #ccc; font-size: 14px;">
+                        <li>✅ Posted 3 social media updates</li>
+                        <li>❌ Ignored 8 negative reviews</li>
+                        <li>📈 Sentiment: +2% (slight improvement)</li>
+                        <li>🎯 <strong>YOUR COUNTER:</strong> Respond to ALL reviews, promote fast service</li>
+                    </ul>
+                </div>
+
+                <div style="background: #2a2a2a; padding: 15px; border-radius: 8px;">
+                    <h4 style="color: #ff6b6b;">HARBOURMASTER (Last 7 Days)</h4>
+                    <ul style="margin-top: 10px; color: #ccc; font-size: 14px;">
+                        <li>✅ Updated winter menu</li>
+                        <li>✅ Responded to 2 reviews</li>
+                        <li>📉 Sentiment: -3% (price complaints)</li>
+                        <li>🎯 <strong>YOUR COUNTER:</strong> Promote value pricing, highlight portions</li>
+                    </ul>
+                </div>
+
+                <div style="background: #2a2a2a; padding: 15px; border-radius: 8px;">
+                    <h4 style="color: #ff6b6b;">MANILLAS (Last 7 Days)</h4>
+                    <ul style="margin-top: 10px; color: #ccc; font-size: 14px;">
+                        <li>✅ Viral Sunday roast post</li>
+                        <li>❌ Zero review responses</li>
+                        <li>📊 Sentiment: Stable</li>
+                        <li>🎯 <strong>YOUR COUNTER:</strong> Better food photography, engage customers</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Sources -->
+        <div class="intel-panel full-width">
+            <div class="panel-header">
+                <span>📋</span>
+                <div class="panel-title">RECEIPTS & SOURCES</div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; font-size: 12px;">
+                <div style="background: #2a2a2a; padding: 10px; border-radius: 5px;">
+                    <strong>TripAdvisor Data:</strong><br>
+                    • 683 Jolly Sailor reviews<br>
+                    • 399 The Bar reviews<br>
+                    • 369 Manillas reviews<br>
+                    • Last updated: 2 hours ago
+                </div>
+                <div style="background: #2a2a2a; padding: 10px; border-radius: 5px;">
+                    <strong>Google Reviews:</strong><br>
+                    • 474 The Bar reviews<br>
+                    • 892 Harbourmaster reviews<br>
+                    • 135 Yacht Club reviews<br>
+                    • Last updated: 1 hour ago
+                </div>
+                <div style="background: #2a2a2a; padding: 10px; border-radius: 5px;">
+                    <strong>Social Media:</strong><br>
+                    • Facebook: 23 posts monitored<br>
+                    • Instagram: 15 posts tracked<br>
+                    • Twitter: 8 mentions found<br>
+                    • Last updated: 30 minutes ago
+                </div>
+                <div style="background: #2a2a2a; padding: 10px; border-radius: 5px;">
+                    <strong>AI Analysis:</strong><br>
+                    • Sentiment analysis: 1,247 reviews<br>
+                    • Keyword extraction: 2,890 phrases<br>
+                    • Trend detection: 47 patterns<br>
+                    • Confidence: 94.7%
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Counter-Strategy -->
+        <div class="counter-strategy">
+            <div class="strategy-title">🚀 YOUR NEXT MOVE - AI RECOMMENDATION</div>
+            <div style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px;">
+                <h3 style="margin-bottom: 15px;">IMMEDIATE ACTION PLAN (Next 48 Hours):</h3>
+                <ol style="font-size: 16px; line-height: 1.6;">
+                    <li><strong>Launch "Lightning Service" campaign</strong> - exploit Jolly Sailor's slow service complaints</li>
+                    <li><strong>Promote Liam as your star server</strong> - he's mentioned more than any competitor's staff</li>
+                    <li><strong>Post better Sunday lunch photos</strong> - beat Manillas' viral post with superior visuals</li>
+                    <li><strong>Respond to ALL reviews this week</strong> - show customers you care (competitors don't)</li>
+                    <li><strong>Highlight your value pricing</strong> - while Harbourmaster raises prices, you stay affordable</li>
+                </ol>
+                
+                <div style="margin-top: 20px; text-align: center;">
+                    <button class="action-button">EXECUTE PLAN</button>
+                    <button class="action-button danger-button">NUCLEAR OPTION</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add some interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulate live updates
+            setInterval(function() {
+                const timestamp = new Date().toLocaleTimeString();
+                console.log(`Intelligence updated: ${timestamp}`);
+            }, 30000);
+
+            // Add click handlers for action buttons
+            document.querySelectorAll('.action-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    if (this.textContent === 'EXECUTE PLAN') {
+                        alert('🚀 PLAN ACTIVATED! Your competitive advantage is now in motion.');
+                    } else if (this.textContent === 'NUCLEAR OPTION') {
+                        alert('💥 NUCLEAR OPTION ENGAGED! Prepare for total market domination.');
+                    }
+                });
+            });
+
+            // Add hover effects for competitor cards
+            document.querySelectorAll('.competitor-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.02)';
+                    this.style.transition = 'transform 0.3s';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
